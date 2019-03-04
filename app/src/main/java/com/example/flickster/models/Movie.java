@@ -3,12 +3,16 @@ package com.example.flickster.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Movie
 {
+    int movieId;
+    double voteAverage;
     String posterPath, title, overview, backdropPath;
 
     public Movie(JSONObject jsonObject) throws JSONException //who ever calls the method has to deal with the catch
@@ -17,7 +21,13 @@ public class Movie
         title=jsonObject.getString("title");
         overview=jsonObject.getString("overview");
         backdropPath=jsonObject.getString("backdrop_path");
+        voteAverage= jsonObject.getDouble("vote_average");
+        movieId =jsonObject.getInt("id");
 
+    }
+    //Empty constructor needed by Parcel
+    public Movie()
+    {
 
     }
     public static List<Movie> fromJSONArray(JSONArray movieJsonArray) throws JSONException
@@ -30,7 +40,7 @@ public class Movie
         return movies;
     }
 
-    public String getPosterPath() { //used the generator for these three getters
+    public String getPosterPath() { //used the generator for these  getters
         return String.format("https://image.tmdb.org/t/p/w342%s", posterPath);
     }
 
@@ -44,5 +54,13 @@ public class Movie
 
     public String getOverview() {
         return overview;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public int getMovieId() {
+        return movieId;
     }
 }
